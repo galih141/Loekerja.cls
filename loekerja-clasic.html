@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loekerja — Work, Learn, Grow.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F7F3EC;
+  --white: #FDFBF6;
+  --ink: #1A1714;
+  --ink2: #48443C;
+  --ink3: #9A9080;
+  --red: #C03020;
+  --green: #2A5C38;
+  --gold: #C8900A;
+  --sky: #B0CCE0;
+  --sage: #A8C4A0;
+  --blush: #E8C0A8;
+  --lemon: #E8DC90;
+  --border: rgba(26,23,20,0.15);
+  --thick: 2px solid #1A1714;
+  --thin: 1px solid rgba(26,23,20,0.15);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Libre Baskerville',Georgia,serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+.mono{font-family:'DM Mono',monospace;}
+.serif{font-family:'Playfair Display',Georgia,serif;}
+.tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--ink);border-radius:100px;}
+.tag.remote{background:var(--sky);border-color:var(--sky);}
+.tag.onsite{background:var(--blush);border-color:var(--blush);}
+.tag.hybrid{background:var(--sage);border-color:var(--sage);}
+.tag.filled{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:300;background:var(--white);border-bottom:var(--thick);}
+.nav-ticker{background:var(--ink);color:var(--paper);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;padding:5px 0;overflow:hidden;white-space:nowrap;}
+.nav-ticker-inner{display:inline-block;animation:ticker 30s linear infinite;}
+@keyframes ticker{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+.nav-main{display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:28px;letter-spacing:-.02em;color:var(--ink);text-decoration:none;padding:16px 0;line-height:1;}
+.nav-logo span{color:var(--red);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{display:block;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding:20px 18px;border-left:var(--thin);transition:background .15s;}
+.nav-links a:hover{background:var(--ink);color:var(--paper);}
+.nav-post{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;border:none;padding:10px 20px;cursor:pointer;border-radius:2px;transition:opacity .15s;margin-left:20px;}
+.nav-post:hover{opacity:.85;}
+
+/* HERO */
+.hero{border-bottom:var(--thick);display:grid;grid-template-columns:1fr 2px 1fr;}
+.hero-divider{background:var(--ink);}
+.hero-left{padding:56px 48px 48px;display:flex;flex-direction:column;justify-content:space-between;}
+.hero-edition{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:20px;}
+.hero-headline{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(48px,6vw,82px);line-height:.92;letter-spacing:-.03em;color:var(--ink);margin-bottom:28px;}
+.hero-headline em{font-style:italic;color:var(--red);}
+.hero-sub{font-size:15px;line-height:1.7;color:var(--ink2);max-width:420px;margin-bottom:36px;border-top:var(--thin);padding-top:20px;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);border:var(--thick);}
+.hero-stat{padding:16px 20px;border-right:var(--thick);text-align:center;}
+.hero-stat:last-child{border-right:none;}
+.hero-stat-num{font-family:'Playfair Display',serif;font-weight:900;font-size:28px;color:var(--ink);display:block;}
+.hero-stat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}
+.hero-right{padding:56px 48px 48px;display:flex;flex-direction:column;gap:24px;}
+.hero-right-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);padding-bottom:12px;border-bottom:var(--thin);}
+.featured-job{display:flex;flex-direction:column;gap:10px;padding:20px;border:var(--thick);cursor:pointer;transition:background .15s;background:var(--white);}
+.featured-job:hover{background:var(--lemon);}
+.fj-company{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}
+.fj-title{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--ink);}
+.fj-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.fj-salary{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);font-weight:500;}
+
+/* SECTIONS */
+.section-wrap{padding:0 40px;}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;padding:40px 0 28px;border-bottom:var(--thick);margin-bottom:32px;}
+.section-head-label{display:flex;align-items:baseline;gap:16px;}
+.section-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:.08em;}
+.section-title-big{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(32px,4vw,52px);letter-spacing:-.02em;line-height:1;}
+.section-title-big em{font-style:italic;color:var(--red);}
+.section-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:2px;transition:color .15s;}
+.section-link:hover{color:var(--red);border-color:var(--red);}
+
+/* FILTER */
+.filter-row{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.filter-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border:var(--thick);background:transparent;color:var(--ink);cursor:pointer;transition:all .15s;border-radius:2px;}
+.filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--paper);}
+.filter-btn.remote.active{background:var(--sky);color:var(--ink);border-color:var(--sky);}
+.filter-btn.onsite.active{background:var(--blush);color:var(--ink);border-color:var(--blush);}
+.filter-btn.hybrid.active{background:var(--sage);color:var(--ink);border-color:var(--sage);}
+
+/* JOBS GRID */
+.jobs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-left:var(--thick);border-top:var(--thick);margin-bottom:48px;}
+.job-card{border-right:var(--thick);border-bottom:var(--thick);padding:24px;background:var(--white);cursor:pointer;transition:background .15s;display:flex;flex-direction:column;gap:12px;}
+.job-card:hover{background:var(--lemon);}
+.job-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.job-logo{width:44px;height:44px;border:var(--thick);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:16px;background:var(--paper);flex-shrink:0;}
+.job-company{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px;}
+.job-title{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;line-height:1.2;color:var(--ink);}
+.job-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:var(--thin);margin-top:auto;}
+.job-salary{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);font-weight:500;}
+.job-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.06em;}
+.job-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.job-location{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);}
+
+/* TALENT */
+.talent-grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:var(--thick);border-top:var(--thick);}
+.talent-card{border-right:var(--thick);border-bottom:var(--thick);padding:24px 20px;cursor:pointer;transition:background .15s;background:var(--white);display:flex;flex-direction:column;gap:10px;}
+.talent-card:hover{background:var(--sage);}
+.talent-avatar{width:52px;height:52px;border-radius:50%;border:var(--thick);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:20px;background:var(--paper);flex-shrink:0;}
+.talent-name{font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:var(--ink);line-height:1.2;}
+.talent-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);}
+.talent-location{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);}
+.talent-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.talent-avail{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:10px;border-top:var(--thin);}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#3DB56A;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.avail-text{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.06em;}
+
+/* LEARNING */
+.learning-grid{display:grid;grid-template-columns:1fr 2px 1fr 2px 1fr;border-left:var(--thick);border-top:var(--thick);}
+.learn-col-divider{background:var(--ink);}
+.learn-col-head{padding:20px 24px;border-bottom:var(--thick);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);background:var(--paper);}
+.learn-item{border-right:var(--thick);border-bottom:var(--thick);padding:20px 24px;cursor:pointer;transition:background .15s;background:var(--white);display:flex;flex-direction:column;gap:8px;}
+.learn-item:hover{background:var(--sky);}
+.learn-item:last-child{border-bottom:none;}
+.learn-icon{font-size:24px;line-height:1;}
+.learn-title{font-family:'Playfair Display',serif;font-weight:700;font-size:15px;line-height:1.3;color:var(--ink);}
+.learn-desc{font-size:12px;line-height:1.6;color:var(--ink2);}
+.learn-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.06em;margin-top:4px;}
+
+/* TEMPLATES */
+.templates-grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:var(--thick);border-top:var(--thick);}
+.template-card{border-right:var(--thick);border-bottom:var(--thick);background:var(--white);cursor:pointer;transition:background .15s;display:flex;flex-direction:column;}
+.template-card:hover{background:var(--blush);}
+.template-preview{aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border-bottom:var(--thick);flex-direction:column;gap:8px;}
+.template-preview span{font-size:48px;line-height:1;}
+.template-preview p{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);}
+.t-bg-1{background:var(--sky);}
+.t-bg-2{background:var(--blush);}
+.t-bg-3{background:var(--sage);}
+.t-bg-4{background:var(--lemon);}
+.t-bg-5{background:var(--paper);}
+.t-bg-6{background:var(--sky);}
+.t-bg-7{background:var(--blush);}
+.t-bg-8{background:var(--lemon);}
+.template-info{padding:16px 20px;flex:1;}
+.template-cat{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px;}
+.template-name{font-family:'Playfair Display',serif;font-weight:700;font-size:14px;color:var(--ink);margin-bottom:8px;line-height:1.3;}
+.template-dl{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.06em;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 2px 1fr;border-top:var(--thick);}
+.contact-divider{background:var(--ink);}
+.contact-card{padding:56px 48px;}
+.contact-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(32px,4vw,52px);line-height:1;letter-spacing:-.02em;margin-bottom:32px;}
+.contact-title em{font-style:italic;color:var(--red);}
+.contact-info-list{display:flex;flex-direction:column;gap:0;border:var(--thick);margin-bottom:24px;}
+.contact-info-item{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:var(--thick);}
+.contact-info-item:last-child{border-bottom:none;}
+.ci-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);width:80px;flex-shrink:0;padding-top:2px;}
+.ci-value{font-size:14px;color:var(--ink);line-height:1.5;}
+.ci-value a{color:var(--red);text-decoration:none;}
+.ci-value a:hover{text-decoration:underline;}
+.contact-form-side{padding:56px 48px;background:var(--white);}
+.form-title{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;margin-bottom:8px;}
+.form-subtitle{font-size:13px;color:var(--ink2);margin-bottom:28px;line-height:1.6;border-bottom:var(--thin);padding-bottom:20px;}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;}
+.form-input,.form-textarea,.form-select{width:100%;padding:12px 14px;border:var(--thick);background:var(--paper);font-family:'Libre Baskerville',serif;font-size:13px;color:var(--ink);border-radius:2px;outline:none;transition:background .15s;}
+.form-input:focus,.form-textarea:focus,.form-select:focus{background:var(--lemon);}
+.form-textarea{resize:vertical;min-height:100px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-submit{width:100%;padding:14px;background:var(--ink);color:var(--paper);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:var(--thick);cursor:pointer;transition:background .15s;border-radius:2px;margin-top:8px;}
+.btn-submit:hover{background:var(--red);border-color:var(--red);}
+
+/* FOOTER */
+footer{border-top:var(--thick);}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;border-bottom:var(--thick);}
+.footer-col{padding:36px 32px;border-right:var(--thick);}
+.footer-col:last-child{border-right:none;}
+.footer-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:32px;letter-spacing:-.02em;color:var(--ink);margin-bottom:12px;}
+.footer-logo span{color:var(--red);}
+.footer-tagline{font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:20px;}
+.footer-col-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px;padding-bottom:10px;border-bottom:var(--thin);}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:13px;color:var(--ink2);text-decoration:none;transition:color .15s;}
+.footer-links a:hover{color:var(--red);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;}
+.footer-copy{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:.08em;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,23,20,.72);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--white);border:var(--thick);max-width:640px;width:100%;max-height:88vh;overflow-y:auto;position:relative;}
+.modal-header{padding:28px 32px 20px;border-bottom:var(--thick);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink);line-height:1;padding:0;flex-shrink:0;}
+.modal-body{padding:28px 32px;}
+.modal-section{margin-bottom:24px;padding-bottom:24px;border-bottom:var(--thin);}
+.modal-section:last-child{border-bottom:none;margin-bottom:0;}
+.modal-section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;}
+.modal-section p{font-size:14px;line-height:1.7;color:var(--ink2);}
+.modal-skills{display:flex;gap:8px;flex-wrap:wrap;}
+.modal-skill{font-family:'DM Mono',monospace;font-size:11px;padding:5px 12px;border:var(--thick);border-radius:2px;background:var(--paper);}
+.modal-links{display:flex;gap:10px;flex-wrap:wrap;}
+.modal-link{font-family:'DM Mono',monospace;font-size:11px;padding:8px 16px;border:var(--thick);border-radius:2px;background:var(--ink);color:var(--paper);text-decoration:none;cursor:pointer;transition:background .15s;}
+.modal-link:hover{background:var(--red);border-color:var(--red);}
+.modal-link.outline{background:transparent;color:var(--ink);}
+.modal-link.outline:hover{background:var(--lemon);}
+.talent-modal-head{display:flex;align-items:center;gap:20px;}
+.talent-modal-avatar{width:64px;height:64px;border-radius:50%;border:var(--thick);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:24px;background:var(--paper);flex-shrink:0;}
+.talent-modal-name{font-family:'Playfair Display',serif;font-weight:900;font-size:24px;letter-spacing:-.01em;}
+.talent-modal-title{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-top:4px;}
+.job-modal-company{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+.job-modal-title{font-family:'Playfair Display',serif;font-weight:900;font-size:28px;letter-spacing:-.02em;line-height:1.1;margin-bottom:12px;}
+.job-modal-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.job-modal-salary{font-family:'DM Mono',monospace;font-size:14px;color:var(--green);font-weight:500;}
+
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .nav-main{padding:0 20px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-divider{display:none;}
+  .hero-left{padding:40px 24px 32px;}
+  .hero-right{padding:32px 24px;}
+  .section-wrap{padding:0 20px;}
+  .jobs-grid{grid-template-columns:1fr;}
+  .learning-grid{grid-template-columns:1fr;}
+  .learn-col-divider{display:none;}
+  .templates-grid{grid-template-columns:1fr 1fr;}
+  .talent-grid{grid-template-columns:1fr 1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .contact-divider{display:none;}
+  .contact-card{padding:40px 24px;}
+  .contact-form-side{padding:40px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-ticker">
+    <span class="nav-ticker-inner">✦ 128 LOWONGAN AKTIF HARI INI &nbsp;·&nbsp; TIPS: PERBARUI CV-MU SEBELUM MELAMAR &nbsp;·&nbsp; LEARNING HUB KINI TERSEDIA &nbsp;·&nbsp; TALENT BOARD: TAMPILKAN DIRIMU KE REKRUTER &nbsp;·&nbsp; REMOTE · HYBRID · ONSITE — SEMUA ADA DI LOEKERJA &nbsp;·&nbsp; 128 LOWONGAN AKTIF &nbsp;·&nbsp; TIPS: PERBARUI CV-MU SEBELUM MELAMAR &nbsp;·&nbsp; LEARNING HUB KINI TERSEDIA &nbsp;·&nbsp; TALENT BOARD: TAMPILKAN DIRIMU KE REKRUTER &nbsp;·&nbsp;</span>
+  </div>
+  <div class="nav-main">
+    <a href="#" class="nav-logo">Loe<span>k</span>erja</a>
+    <ul class="nav-links">
+      <li><a href="#jobs">Lowongan</a></li>
+      <li><a href="#talent">Talent Board</a></li>
+      <li><a href="#learning">Learning Hub</a></li>
+      <li><a href="#templates">Templates</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+    <button class="nav-post" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">+ Post Lowongan</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-edition mono">Vol. I · No. 1 · Jakarta, 2026 · Edisi Harian</div>
+      <h1 class="hero-headline serif">Kerja<br>Bukan<br><em>Sekadar</em><br>Gaji.</h1>
+      <p class="hero-sub">Platform kerja, belajar, dan berkembang untuk generasi kreatif Indonesia. Remote, hybrid, onsite — semua ada di sini.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num serif">128</span>
+        <span class="hero-stat-label mono">Lowongan Aktif</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num serif">2.4K</span>
+        <span class="hero-stat-label mono">Pencari Kerja</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num serif">340+</span>
+        <span class="hero-stat-label mono">Template Gratis</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-right">
+    <div class="hero-right-title">— Lowongan Pilihan Editor</div>
+    <div class="featured-job" onclick="openJobModal('fj1')">
+      <div class="fj-company mono">Tokopedia · Jakarta</div>
+      <div class="fj-title serif">Senior UI/UX Designer</div>
+      <div class="fj-meta"><span class="tag hybrid">Hybrid</span><span class="fj-salary mono">Rp 18–25 Jt/bln</span></div>
+    </div>
+    <div class="featured-job" onclick="openJobModal('fj2')">
+      <div class="fj-company mono">Startup Stealth Mode · Remote</div>
+      <div class="fj-title serif">3D Generalist & Motion Artist</div>
+      <div class="fj-meta"><span class="tag remote">Remote</span><span class="fj-salary mono">Rp 12–18 Jt/bln</span></div>
+    </div>
+    <div class="featured-job" onclick="openJobModal('fj3')">
+      <div class="fj-company mono">Gojek · Jakarta Selatan</div>
+      <div class="fj-title serif">Product Manager — Growth</div>
+      <div class="fj-meta"><span class="tag onsite">Onsite</span><span class="fj-salary mono">Rp 22–35 Jt/bln</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section id="jobs" style="border-top:var(--thick);">
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-head-label">
+        <span class="section-num mono">01 —</span>
+        <h2 class="section-title-big serif">Lowongan <em>Kerja</em></h2>
+      </div>
+      <a href="#" class="section-link">Lihat Semua →</a>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterJobs('all',this)">Semua</button>
+      <button class="filter-btn remote" onclick="filterJobs('remote',this)">Remote</button>
+      <button class="filter-btn onsite" onclick="filterJobs('onsite',this)">Onsite</button>
+      <button class="filter-btn hybrid" onclick="filterJobs('hybrid',this)">Hybrid</button>
+    </div>
+    <div class="jobs-grid" id="jobsGrid">
+      <div class="job-card" data-type="remote" onclick="openJobModal('j1')">
+        <div class="job-card-top"><div><div class="job-company mono">Ruangguru</div><div class="job-title serif">Graphic Designer — Ed-Tech</div></div><div class="job-logo serif">Rg</div></div>
+        <div class="job-tags"><span class="tag remote">Remote</span><span class="tag">Full-Time</span></div>
+        <div class="job-location mono">📍 Remote — Indonesia</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 8–12 Jt/bln</span><span class="job-date mono">2 hari lalu</span></div>
+      </div>
+      <div class="job-card" data-type="hybrid" onclick="openJobModal('j2')">
+        <div class="job-card-top"><div><div class="job-company mono">Vidio</div><div class="job-title serif">Motion Graphics Artist</div></div><div class="job-logo serif">Vi</div></div>
+        <div class="job-tags"><span class="tag hybrid">Hybrid</span><span class="tag">Full-Time</span></div>
+        <div class="job-location mono">📍 Jakarta Selatan</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 10–16 Jt/bln</span><span class="job-date mono">3 hari lalu</span></div>
+      </div>
+      <div class="job-card" data-type="onsite" onclick="openJobModal('j3')">
+        <div class="job-card-top"><div><div class="job-company mono">Bank Jago</div><div class="job-title serif">UI Engineer — Design System</div></div><div class="job-logo serif">BJ</div></div>
+        <div class="job-tags"><span class="tag onsite">Onsite</span><span class="tag">Full-Time</span></div>
+        <div class="job-location mono">📍 Jakarta Pusat</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 14–20 Jt/bln</span><span class="job-date mono">1 hari lalu</span></div>
+      </div>
+      <div class="job-card" data-type="remote" onclick="openJobModal('j4')">
+        <div class="job-card-top"><div><div class="job-company mono">Agensi Kecil</div><div class="job-title serif">Social Media Creative</div></div><div class="job-logo serif">AK</div></div>
+        <div class="job-tags"><span class="tag remote">Remote</span><span class="tag">Freelance</span></div>
+        <div class="job-location mono">📍 Remote — Worldwide</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 5–8 Jt/bln</span><span class="job-date mono">Hari ini</span></div>
+      </div>
+      <div class="job-card" data-type="hybrid" onclick="openJobModal('j5')">
+        <div class="job-card-top"><div><div class="job-company mono">Kumpul</div><div class="job-title serif">Brand Strategist</div></div><div class="job-logo serif">Km</div></div>
+        <div class="job-tags"><span class="tag hybrid">Hybrid</span><span class="tag">Full-Time</span></div>
+        <div class="job-location mono">📍 Bandung / Remote</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 9–13 Jt/bln</span><span class="job-date mono">4 hari lalu</span></div>
+      </div>
+      <div class="job-card" data-type="onsite" onclick="openJobModal('j6')">
+        <div class="job-card-top"><div><div class="job-company mono">Kompas Gramedia</div><div class="job-title serif">Illustrator & Visual Storyteller</div></div><div class="job-logo serif">KG</div></div>
+        <div class="job-tags"><span class="tag onsite">Onsite</span><span class="tag">Full-Time</span></div>
+        <div class="job-location mono">📍 Jakarta Barat</div>
+        <div class="job-footer"><span class="job-salary mono">Rp 7–11 Jt/bln</span><span class="job-date mono">5 hari lalu</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TALENT BOARD -->
+<section id="talent" style="border-top:var(--thick);">
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-head-label">
+        <span class="section-num mono">02 —</span>
+        <h2 class="section-title-big serif">Talent <em>Board</em></h2>
+      </div>
+      <a href="#" class="section-link">Daftar Sebagai Talent →</a>
+    </div>
+    <p style="font-size:13px;color:var(--ink2);margin-bottom:28px;max-width:560px;line-height:1.7;border-bottom:var(--thin);padding-bottom:20px;">Para profesional yang sedang <em>open to work</em>. Klik kartu untuk melihat profil lengkap, CV, dan portofolio mereka.</p>
+  </div>
+  <div class="talent-grid">
+    <div class="talent-card" onclick="openTalentModal('t1')">
+      <div class="talent-avatar" style="background:var(--sky);">GA</div>
+      <div class="talent-name serif">Galih Arganata</div>
+      <div class="talent-title mono">3D Generalist · Compositing</div>
+      <div class="talent-location mono">📍 Malang → Open Relocate</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span><span class="tag hybrid">Hybrid</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t2')">
+      <div class="talent-avatar" style="background:var(--blush);">SR</div>
+      <div class="talent-name serif">Sari Ramadhani</div>
+      <div class="talent-title mono">UI/UX Designer · Figma Expert</div>
+      <div class="talent-location mono">📍 Jakarta</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span><span class="tag onsite">Onsite</span><span class="tag hybrid">Hybrid</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t3')">
+      <div class="talent-avatar" style="background:var(--sage);">BP</div>
+      <div class="talent-name serif">Budi Pratama</div>
+      <div class="talent-title mono">Brand Designer · Illustrator</div>
+      <div class="talent-location mono">📍 Yogyakarta → Remote OK</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t4')">
+      <div class="talent-avatar" style="background:var(--lemon);">NA</div>
+      <div class="talent-name serif">Nadia Aulia</div>
+      <div class="talent-title mono">Social Media Strategist</div>
+      <div class="talent-location mono">📍 Surabaya</div>
+      <div class="talent-tags"><span class="tag hybrid">Hybrid</span><span class="tag onsite">Onsite</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t5')">
+      <div class="talent-avatar" style="background:var(--sky);">RH</div>
+      <div class="talent-name serif">Rizki Hakim</div>
+      <div class="talent-title mono">Video Editor · Motion Designer</div>
+      <div class="talent-location mono">📍 Bandung → Remote OK</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span><span class="tag hybrid">Hybrid</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t6')">
+      <div class="talent-avatar" style="background:var(--blush);">DW</div>
+      <div class="talent-name serif">Dewi Wulandari</div>
+      <div class="talent-title mono">Product Manager · Agile Coach</div>
+      <div class="talent-location mono">📍 Jakarta</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span><span class="tag onsite">Onsite</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" onclick="openTalentModal('t7')">
+      <div class="talent-avatar" style="background:var(--sage);">FA</div>
+      <div class="talent-name serif">Farhan Alamsyah</div>
+      <div class="talent-title mono">Copywriter · Content Strategist</div>
+      <div class="talent-location mono">📍 Nomaden 🗺️</div>
+      <div class="talent-tags"><span class="tag remote">Remote</span></div>
+      <div class="talent-avail"><div class="avail-dot"></div><span class="avail-text mono">Open to Work</span></div>
+    </div>
+    <div class="talent-card" style="background:var(--paper);cursor:default;align-items:center;justify-content:center;text-align:center;border:2px dashed var(--ink3);">
+      <div style="font-size:32px;">＋</div>
+      <div class="talent-name serif" style="font-size:15px;">Daftarkan Dirimu</div>
+      <div class="talent-title" style="color:var(--ink3);margin-top:4px;">Tampilkan profil & portofoliomu ke ribuan rekruter</div>
+      <button onclick="alert('Fitur registrasi segera hadir! 🎉')" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 20px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:2px;margin-top:16px;">Gabung Sekarang</button>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING HUB -->
+<section id="learning" style="border-top:var(--thick);">
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-head-label">
+        <span class="section-num mono">03 —</span>
+        <h2 class="section-title-big serif">Learning <em>Hub</em></h2>
+      </div>
+      <a href="#" class="section-link">Semua Materi →</a>
+    </div>
+  </div>
+  <div class="learning-grid">
+    <div class="learn-col">
+      <div class="learn-col-head">🎯 Interview & Karir</div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">🗣️</div>
+        <div class="learn-title serif">Cara Menjawab "Ceritakan Tentang Dirimu"</div>
+        <div class="learn-desc">Panduan lengkap menjawab pertanyaan paling klasik di wawancara kerja.</div>
+        <div class="learn-meta mono">12 mnt baca · Intermediate</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">💡</div>
+        <div class="learn-title serif">Negosiasi Gaji Tanpa Canggung</div>
+        <div class="learn-desc">Teknik negosiasi yang bisa kamu pakai mulai dari interview pertama.</div>
+        <div class="learn-meta mono">8 mnt baca · Beginner</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">🔍</div>
+        <div class="learn-title serif">Riset Perusahaan Sebelum Interview</div>
+        <div class="learn-desc">Framework sederhana untuk riset mendalam dalam 30 menit.</div>
+        <div class="learn-meta mono">6 mnt baca · Beginner</div>
+      </div>
+    </div>
+    <div class="learn-col-divider"></div>
+    <div class="learn-col">
+      <div class="learn-col-head">📄 CV & Portofolio</div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">📝</div>
+        <div class="learn-title serif">Anatomi CV yang Lolos ATS</div>
+        <div class="learn-desc">Cara menyusun CV agar tidak langsung terfilter oleh sistem.</div>
+        <div class="learn-meta mono">15 mnt baca · Intermediate</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">🎨</div>
+        <div class="learn-title serif">Portofolio Kreatif yang Menarik Klien</div>
+        <div class="learn-desc">Bukan soal banyaknya karya, tapi bagaimana kamu menceritakannya.</div>
+        <div class="learn-meta mono">10 mnt baca · All Level</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">✉️</div>
+        <div class="learn-title serif">Cover Letter yang Tidak Membosankan</div>
+        <div class="learn-desc">Template dan contoh cover letter yang membuat rekruter ingin baca lebih.</div>
+        <div class="learn-meta mono">7 mnt baca · Beginner</div>
+      </div>
+    </div>
+    <div class="learn-col-divider"></div>
+    <div class="learn-col">
+      <div class="learn-col-head">🚀 Tips & Trik Karir</div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">🌐</div>
+        <div class="learn-title serif">Personal Branding di Era Digital</div>
+        <div class="learn-desc">Bangun nama dan reputasi profesionalmu sebelum melamar pekerjaan.</div>
+        <div class="learn-meta mono">18 mnt baca · Advanced</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">🔗</div>
+        <div class="learn-title serif">Networking yang Tidak Terasa Awkward</div>
+        <div class="learn-desc">Strategi membangun koneksi profesional yang organik dan genuine.</div>
+        <div class="learn-meta mono">9 mnt baca · Intermediate</div>
+      </div>
+      <div class="learn-item" onclick="alert('Segera tersedia!')">
+        <div class="learn-icon">💼</div>
+        <div class="learn-title serif">Dari Freelance ke Full-Time: Panduan Transisi</div>
+        <div class="learn-desc">Langkah konkret pindah jalur dari freelance ke karir korporat.</div>
+        <div class="learn-meta mono">14 mnt baca · Advanced</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" style="border-top:var(--thick);">
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-head-label">
+        <span class="section-num mono">04 —</span>
+        <h2 class="section-title-big serif">Template <em>Source</em></h2>
+      </div>
+      <a href="#" class="section-link">Semua Template →</a>
+    </div>
+  </div>
+  <div class="templates-grid">
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-1"><span>📄</span><p>CV Template</p></div>
+      <div class="template-info"><div class="template-cat mono">CV · Resume</div><div class="template-name serif">CV Minimalis ATS-Friendly</div><div class="template-dl mono">↓ 1.2K downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-2"><span>🎨</span><p>Portfolio</p></div>
+      <div class="template-info"><div class="template-cat mono">Portofolio</div><div class="template-name serif">Creative Portfolio Deck (PPT)</div><div class="template-dl mono">↓ 980 downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-3"><span>🧠</span><p>Psikotes</p></div>
+      <div class="template-info"><div class="template-cat mono">Psikologi Test</div><div class="template-name serif">Latihan Psikotes Lengkap (PDF)</div><div class="template-dl mono">↓ 3.4K downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-4"><span>📊</span><p>Produktivitas</p></div>
+      <div class="template-info"><div class="template-cat mono">Produktivitas</div><div class="template-name serif">Weekly Planner & Goal Tracker</div><div class="template-dl mono">↓ 760 downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-5"><span>✉️</span><p>Cover Letter</p></div>
+      <div class="template-info"><div class="template-cat mono">Lamaran</div><div class="template-name serif">Cover Letter Pack (3 Gaya)</div><div class="template-dl mono">↓ 2.1K downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-6"><span>🤝</span><p>Freelance</p></div>
+      <div class="template-info"><div class="template-cat mono">Freelance</div><div class="template-name serif">Kontrak & Invoice Template</div><div class="template-dl mono">↓ 1.8K downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-7"><span>🔗</span><p>LinkedIn</p></div>
+      <div class="template-info"><div class="template-cat mono">Personal Brand</div><div class="template-name serif">LinkedIn Profile Optimization</div><div class="template-dl mono">↓ 540 downloads · Gratis</div></div>
+    </div>
+    <div class="template-card" onclick="alert('Download segera tersedia!')">
+      <div class="template-preview t-bg-8"><span>📈</span><p>Career Plan</p></div>
+      <div class="template-info"><div class="template-cat mono">Career Dev</div><div class="template-name serif">5-Year Career Roadmap</div><div class="template-dl mono">↓ 420 downloads · Gratis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="border-top:var(--thick);">
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-head-label">
+        <span class="section-num mono">05 —</span>
+        <h2 class="section-title-big serif">Hubungi <em>Kami</em></h2>
+      </div>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-title serif">Ada Lowongan<br>untuk <em>Diposting?</em></div>
+      <div class="contact-info-list">
+        <div class="contact-info-item"><div class="ci-label mono">Email</div><div class="ci-value"><a href="mailto:Loekerja@gmail.com">Loekerja@gmail.com</a></div></div>
+        <div class="contact-info-item"><div class="ci-label mono">Lokasi</div><div class="ci-value">Jakarta, Indonesia<br><span style="color:var(--ink3);font-size:12px;">( atau mungkin lagi nomaden ☕ )</span></div></div>
+        <div class="contact-info-item"><div class="ci-label mono">Layanan</div><div class="ci-value">Post Lowongan · Talent Scouting<br>Partnership · Sponsorship</div></div>
+        <div class="contact-info-item"><div class="ci-label mono">Respons</div><div class="ci-value">Biasanya dalam 1–2 hari kerja</div></div>
+      </div>
+      <div style="padding:20px;border:var(--thick);background:var(--lemon);">
+        <div class="mono" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;">— Catatan Editor</div>
+        <p style="font-size:13px;line-height:1.7;color:var(--ink2);">Posting lowongan di Loekerja sepenuhnya <strong>gratis</strong> untuk sementara. Kami percaya koneksi yang baik tidak seharusnya mahal.</p>
+      </div>
+    </div>
+    <div class="contact-divider"></div>
+    <div class="contact-form-side">
+      <div class="form-title serif">Kirim Detail Lowongan</div>
+      <div class="form-subtitle">Isi form di bawah dan tim kami akan mempublikasikan lowonganmu dalam 1–2 hari kerja. Gratis, cepat, dan mudah.</div>
+      <div class="form-group"><label class="form-label">Nama Perusahaan / Klien *</label><input class="form-input" type="text" placeholder="misal: Tokopedia, Startup Stealth, dll."></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Email Penghubung *</label><input class="form-input" type="email" placeholder="email@perusahaan.com"></div>
+        <div class="form-group"><label class="form-label">Tipe Pekerjaan *</label><select class="form-select"><option value="">Pilih...</option><option>Remote</option><option>Onsite</option><option>Hybrid</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Posisi yang Dibuka *</label><input class="form-input" type="text" placeholder="misal: UI/UX Designer, Motion Artist..."></div>
+      <div class="form-group"><label class="form-label">Kisaran Gaji (opsional)</label><input class="form-input" type="text" placeholder="misal: Rp 8–12 Jt/bln"></div>
+      <div class="form-group"><label class="form-label">Detail Lowongan & Kualifikasi *</label><textarea class="form-textarea" placeholder="Ceritakan posisi yang kamu cari, skill yang dibutuhkan, dan info penting lainnya..."></textarea></div>
+      <button class="btn-submit" onclick="alert('Terima kasih! Lowonganmu akan kami review dalam 1–2 hari kerja. 🎉')">Kirim Lowongan →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-logo serif">Loe<span>k</span>erja</div>
+      <div class="footer-tagline">Platform kerja, belajar, dan berkembang untuk generasi kreatif Indonesia. Remote · Hybrid · Onsite.</div>
+      <span class="tag filled" style="font-size:10px;">Jakarta × Nomaden · 2026</span>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title mono">Platform</div>
+      <ul class="footer-links"><li><a href="#jobs">Lowongan Kerja</a></li><li><a href="#talent">Talent Board</a></li><li><a href="#learning">Learning Hub</a></li><li><a href="#templates">Template Source</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title mono">Untuk Pekerja</div>
+      <ul class="footer-links"><li><a href="#">Daftar Akun</a></li><li><a href="#">Upload CV</a></li><li><a href="#">Pasang Profil</a></li><li><a href="#">Download Template</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title mono">Untuk Rekruter</div>
+      <ul class="footer-links"><li><a href="#contact">Post Lowongan</a></li><li><a href="#talent">Cari Talent</a></li><li><a href="#contact">Partnership</a></li><li><a href="mailto:Loekerja@gmail.com">Kontak</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy mono">© 2026 Loekerja · All rights reserved</span>
+    <span class="footer-copy mono">Made with ☕ · Jakarta, Indonesia</span>
+    <span class="footer-copy mono">Loekerja@gmail.com</span>
+  </div>
+</footer>
+
+<!-- JOB MODAL -->
+<div class="modal-overlay" id="jobModal" onclick="closeModal('jobModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="job-modal-company mono" id="jm-company"></div>
+        <div class="job-modal-title serif" id="jm-title"></div>
+        <div class="job-modal-meta" id="jm-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('jobModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section"><div class="modal-section-label mono">Tentang Posisi</div><p id="jm-desc"></p></div>
+      <div class="modal-section"><div class="modal-section-label mono">Kualifikasi</div><p id="jm-qual"></p></div>
+      <div class="modal-section"><div class="modal-section-label mono">Keahlian yang Dibutuhkan</div><div class="modal-skills" id="jm-skills"></div></div>
+      <div class="modal-section" style="border-bottom:none;"><div class="modal-links"><a class="modal-link" href="mailto:Loekerja@gmail.com">Lamar Sekarang</a><button class="modal-link outline" onclick="closeModal('jobModal')">Tutup</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TALENT MODAL -->
+<div class="modal-overlay" id="talentModal" onclick="closeModal('talentModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="talent-modal-head">
+        <div class="talent-modal-avatar serif" id="tm-avatar"></div>
+        <div><div class="talent-modal-name serif" id="tm-name"></div><div class="talent-modal-title mono" id="tm-title"></div></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('talentModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section"><div class="modal-section-label mono">Info</div><div class="modal-skills" id="tm-meta"></div></div>
+      <div class="modal-section"><div class="modal-section-label mono">Tentang</div><p id="tm-bio"></p></div>
+      <div class="modal-section"><div class="modal-section-label mono">Keahlian</div><div class="modal-skills" id="tm-skills"></div></div>
+      <div class="modal-section"><div class="modal-section-label mono">Tipe Pekerjaan</div><div class="modal-skills" id="tm-types"></div></div>
+      <div class="modal-section" style="border-bottom:none;"><div class="modal-section-label mono">Aksi</div><div class="modal-links" id="tm-links"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const jobs = {
+  fj1:{company:'Tokopedia · Jakarta',title:'Senior UI/UX Designer',type:'hybrid',salary:'Rp 18–25 Jt/bln',desc:'Bergabunglah dengan tim desain Tokopedia untuk merancang pengalaman belanja yang digunakan jutaan orang setiap hari. Kamu akan bekerja dalam skuad produk lintas fungsi dengan PM, engineer, dan researcher.',qual:'Min. 4 tahun pengalaman UI/UX. Portfolio yang kuat. Fasih dengan Figma dan design system. Pengalaman di fintech atau e-commerce menjadi nilai plus.',skills:['Figma','Design System','User Research','Prototyping','Usability Testing','Framer']},
+  fj2:{company:'Startup Stealth Mode',title:'3D Generalist & Motion Artist',type:'remote',salary:'Rp 12–18 Jt/bln',desc:'Bergabung sebagai 3D & Motion Artist untuk startup teknologi dalam fase stealth. Kamu akan mengerjakan aset visual produk, animasi marketing, dan material presentasi investor.',qual:'Min. 3 tahun pengalaman 3D. Mahir Blender. Portofolio motion graphics yang solid. Bisa kerja mandiri dan meet deadline.',skills:['Blender','After Effects','Cinema 4D','Motion Graphics','Product Visualization','Compositing']},
+  fj3:{company:'Gojek · Jakarta Selatan',title:'Product Manager — Growth',type:'onsite',salary:'Rp 22–35 Jt/bln',desc:'Bergabunglah dengan tim Growth Gojek untuk mendorong pertumbuhan produk melalui eksperimen berbasis data, fitur akuisisi, dan inisiatif retensi pengguna.',qual:'Min. 5 tahun sebagai Product Manager. Pengalaman growth product di consumer tech. Analytical mindset kuat.',skills:['Product Strategy','Growth Hacking','Data Analytics','A/B Testing','SQL','User Interviews']},
+  j1:{company:'Ruangguru',title:'Graphic Designer — Ed-Tech',type:'remote',salary:'Rp 8–12 Jt/bln',desc:'Bergabung dengan tim kreatif Ruangguru untuk menghasilkan konten visual yang menginspirasi jutaan pelajar Indonesia. Mulai dari ilustrasi, infografis, hingga aset media sosial.',qual:'Min. 2 tahun pengalaman desain grafis. Portfolio yang beragam. Bisa kerja remote dan mandiri.',skills:['Illustrator','Photoshop','Figma','Motion Graphics','Canva','Brand Design']},
+  j2:{company:'Vidio',title:'Motion Graphics Artist',type:'hybrid',salary:'Rp 10–16 Jt/bln',desc:'Buat motion graphics untuk konten streaming, program TV digital, dan kampanye marketing Vidio. Kamu akan berkolaborasi erat dengan tim kreatif dan produksi.',qual:'Min. 3 tahun pengalaman motion. Mahir After Effects dan Premiere. Pernah bekerja di industri media menjadi plus.',skills:['After Effects','Premiere Pro','Cinema 4D','Illustrator','Motion Design','Storyboarding']},
+  j3:{company:'Bank Jago',title:'UI Engineer — Design System',type:'onsite',salary:'Rp 14–20 Jt/bln',desc:'Bangun dan rawat design system Bank Jago yang digunakan di seluruh produk digital. Kamu akan bekerja di persimpangan antara desain dan engineering.',qual:'Min. 3 tahun pengalaman frontend/UI engineering. Familiar React dan CSS-in-JS. Pengalaman membangun design system adalah nilai besar.',skills:['React','TypeScript','Storybook','CSS','Design Tokens','Figma']},
+  j4:{company:'Agensi Kecil',title:'Social Media Creative',type:'remote',salary:'Rp 5–8 Jt/bln',desc:'Buat konten kreatif untuk klien agensi digital kami yang bergerak di F&B, lifestyle, dan fashion. Konten meliputi static post, reels, dan story.',qual:'Portfolio konten media sosial yang menarik. Mengerti algoritma konten terkini. Bisa produksi mandiri.',skills:['Canva','CapCut','Reels Production','Copywriting','Content Calendar','Trend Research']},
+  j5:{company:'Kumpul',title:'Brand Strategist',type:'hybrid',salary:'Rp 9–13 Jt/bln',desc:'Kembangkan strategi brand untuk klien startup dan bisnis lokal bersama tim Kumpul. Kamu akan mengerjakan brand identity, messaging, hingga go-to-market strategy.',qual:'Min. 3 tahun pengalaman branding atau marketing. Kemampuan presentasi yang kuat.',skills:['Brand Strategy','Market Research','Deck Presentation','Workshop Facilitation','Content Strategy']},
+  j6:{company:'Kompas Gramedia',title:'Illustrator & Visual Storyteller',type:'onsite',salary:'Rp 7–11 Jt/bln',desc:'Buat ilustrasi editorial untuk publikasi Kompas Gramedia termasuk buku, majalah, dan konten digital.',qual:'Portfolio ilustrasi yang kuat. Pengalaman di editorial atau publishing menjadi nilai plus. Bisa memenuhi tenggat waktu ketat.',skills:['Procreate','Illustrator','Editorial Illustration','Character Design','Typography','Storytelling']}
+};
+
+const talents = {
+  t1:{initials:'GA',name:'Galih Arganata',title:'3D Generalist · Compositing Artist',location:'Malang → Open Relocate',bio:'3D generalist dengan 10+ tahun pengalaman dari pipeline animasi studio hingga product visualization. IMDb credit di Jungle Beat: The Movie. Berpengalaman dalam Blender, Nuke, dan pipeline LRC.',skills:['Blender','Nuke','3D Modeling','Compositing','Rigging','Motion Graphics','Photoshop'],types:['Remote','Hybrid'],email:'ga.arganata@gmail.com',portfolio:'freetoday.framer.website',bg:'var(--sky)'},
+  t2:{initials:'SR',name:'Sari Ramadhani',title:'UI/UX Designer · Figma Expert',location:'Jakarta',bio:'Designer dengan 5 tahun pengalaman di fintech dan e-commerce. Spesialisasi di design system, user research, dan prototyping interaktif.',skills:['Figma','Design System','Prototyping','User Research','Framer','Notion'],types:['Remote','Onsite','Hybrid'],email:'sari.ramadhani@gmail.com',portfolio:'sari.framer.website',bg:'var(--blush)'},
+  t3:{initials:'BP',name:'Budi Pratama',title:'Brand Designer · Illustrator',location:'Yogyakarta → Remote OK',bio:'Brand designer dan illustrator dengan gaya yang distinctive. Telah mengerjakan identitas visual untuk 30+ brand lokal dan internasional.',skills:['Illustrator','Photoshop','Brand Identity','Packaging Design','Typography','Procreate'],types:['Remote'],email:'budi.pratama@gmail.com',portfolio:'budi.cargo.site',bg:'var(--sage)'},
+  t4:{initials:'NA',name:'Nadia Aulia',title:'Social Media Strategist',location:'Surabaya',bio:'Spesialis strategi konten dan media sosial dengan track record menumbuhkan akun dari 0 ke 100K followers.',skills:['Content Strategy','Copywriting','Reels Production','Analytics','Canva','CapCut'],types:['Hybrid','Onsite'],email:'nadia.aulia@gmail.com',portfolio:null,bg:'var(--lemon)'},
+  t5:{initials:'RH',name:'Rizki Hakim',title:'Video Editor · Motion Designer',location:'Bandung → Remote OK',bio:'Video editor dan motion designer dengan 6 tahun pengalaman di agensi kreatif dan produksi film pendek.',skills:['Premiere Pro','After Effects','DaVinci Resolve','Motion Graphics','Color Grading','Sound Design'],types:['Remote','Hybrid'],email:'rizki.hakim@gmail.com',portfolio:'rizki.behance.net',bg:'var(--sky)'},
+  t6:{initials:'DW',name:'Dewi Wulandari',title:'Product Manager · Agile Coach',location:'Jakarta',bio:'Product Manager dengan 8 tahun pengalaman di consumer tech dan fintech. Certified Agile Coach. Telah meluncurkan 10+ produk.',skills:['Product Strategy','Agile/Scrum','Data Analytics','User Interviews','Roadmapping','SQL'],types:['Remote','Onsite'],email:'dewi.wulandari@gmail.com',portfolio:null,bg:'var(--blush)'},
+  t7:{initials:'FA',name:'Farhan Alamsyah',title:'Copywriter · Content Strategist',location:'Nomaden 🗺️',bio:'Nomadic copywriter yang telah menulis untuk brand di 6 negara. Spesialisasi di brand voice, long-form content, dan UX writing.',skills:['Copywriting','UX Writing','Content Strategy','SEO','Brand Voice','Script Writing'],types:['Remote'],email:'farhan.alamsyah@gmail.com',portfolio:'farhan.substack.com',bg:'var(--sage)'}
+};
+
+function openJobModal(id){
+  const d=jobs[id]; if(!d) return;
+  document.getElementById('jm-company').textContent=d.company;
+  document.getElementById('jm-title').textContent=d.title;
+  document.getElementById('jm-meta').innerHTML=`<span class="tag ${d.type}">${d.type.charAt(0).toUpperCase()+d.type.slice(1)}</span> <span class="job-modal-salary mono">${d.salary}</span>`;
+  document.getElementById('jm-desc').textContent=d.desc;
+  document.getElementById('jm-qual').textContent=d.qual;
+  document.getElementById('jm-skills').innerHTML=d.skills.map(s=>`<span class="modal-skill">${s}</span>`).join('');
+  document.getElementById('jobModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function openTalentModal(id){
+  const d=talents[id]; if(!d) return;
+  const av=document.getElementById('tm-avatar');
+  av.textContent=d.initials; av.style.background=d.bg;
+  document.getElementById('tm-name').textContent=d.name;
+  document.getElementById('tm-title').textContent=d.title;
+  document.getElementById('tm-meta').innerHTML=`<span class="modal-skill">📍 ${d.location}</span><span class="modal-skill">✉️ ${d.email}</span>`;
+  document.getElementById('tm-bio').textContent=d.bio;
+  document.getElementById('tm-skills').innerHTML=d.skills.map(s=>`<span class="modal-skill">${s}</span>`).join('');
+  document.getElementById('tm-types').innerHTML=d.types.map(t=>`<span class="tag ${t.toLowerCase()}">${t}</span>`).join('');
+  let links=`<a class="modal-link" href="mailto:${d.email}">✉ Hubungi</a>`;
+  if(d.portfolio) links+=`<a class="modal-link outline" href="https://${d.portfolio}" target="_blank">🔗 Portfolio</a>`;
+  links+=`<button class="modal-link outline" onclick="closeModal('talentModal')">Tutup</button>`;
+  document.getElementById('tm-links').innerHTML=links;
+  document.getElementById('talentModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function filterJobs(type,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.job-card').forEach(c=>{
+    c.style.display=(type==='all'||c.dataset.type===type)?'':'none';
+  });
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('jobModal');closeModal('talentModal');}});
+</script>
+</body>
+</html>
